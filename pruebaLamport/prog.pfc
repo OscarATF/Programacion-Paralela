@@ -1,0 +1,68 @@
+program prog;
+const 
+	N=3;
+var
+	nt: array[1..N] of integer;
+	s: array[1..N] of boolean;
+	
+function ntMax: integer;
+	var 
+		max,k:integer;
+	begin
+		max:=nt[1];
+		for k:=2 to N do
+		begin
+			if max<nt[k] then
+				max:=nt[k];
+		end;
+		ntMax:=max;	
+	end;
+	
+function ntMayorQue(i,j:integer): boolean;
+	begin
+		if nt[i]>nt[j] then
+		 	ntMayorQue:=true
+		else 
+			begin
+				if nt[i]<nt[j] then 
+					ntMayorQue:=false
+				else
+					begin
+						if i>j then
+							ntMayorQue:=true
+						else
+							ntMayorQue:=false;
+					end;
+			end;
+	end;
+
+procedure p(i:integer);
+	var j:integer;
+	begin
+		s[i]:=true;
+		nt[i]:=1+ntMax;
+		s[i]:=false;
+		for j:=1 to N do
+			begin
+				while s[j]=true do;
+				while (nt[j]<>0) and (ntMayorQue(i,j)) do;
+			end;
+			{SECCION CRITICA}
+			writeln('Seccion critica ',i);
+			nt[i]:=0;
+	end;
+{main}
+var
+	aux:integer;
+begin
+	for aux:=1 to N do
+		begin
+			nt[aux]:=0;
+			s[aux]:=false;
+		end;
+	cobegin
+		p(1);
+		p(2);
+		p(3);
+	coend;
+end.

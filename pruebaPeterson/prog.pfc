@@ -1,0 +1,38 @@
+program prog;
+var
+	s1,s2: boolean;
+	turno: integer;
+	
+procedure p1;
+begin
+	s1:=true;
+	turno:=2;
+	while (s2=true) and (turno=2) do;
+	{SECCION CRITICA}
+	writeln('Seccion critica 1');
+	
+	s1:=false;
+end;
+
+procedure p2;
+begin
+	s2:=true;
+	turno:=1;
+	while (s1=true) and (turno=1) do;
+	{seccion critica}
+	writeln('Seccion critica 2');
+	s2:=false;
+end;
+
+
+{main}
+begin
+
+	s1:=false;
+	s2:=false;
+	turno:=1;
+	cobegin
+		p1;
+		p2;
+	coend;
+end.

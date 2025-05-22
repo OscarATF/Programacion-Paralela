@@ -1,0 +1,58 @@
+program prog;
+{Algoritmo de dekker}
+var
+	s1,s2: boolean;
+	turno,num: integer;
+	
+procedure p1;
+begin
+	s1:=true;
+	while s2=true do 
+		begin
+			if turno=2 then
+				begin
+					s1:=false;
+					while turno=2 do;
+					s1:=true;
+				end; 
+		end;
+	{SECCION CRITICA}
+	writeln('Seccion critica 1');
+	num:=num+5;
+	
+	turno:=2;
+	s1:=false;
+end;
+
+procedure p2;
+begin
+	s2:=true;
+	while s1=true do
+		begin
+			if turno=1 then
+				begin
+					s2:=false;
+					while turno=1 do;
+					s2:=true;
+				end;
+		end;
+	{SECCION CRITICA}
+	writeln('Seccion critica 2');
+	num:=num+10;
+	
+	turno:=1;
+	s2:=false;
+end;
+
+{MAIN}
+begin
+	num:=0;
+	s1:=false;
+	s2:=false;
+	turno:=1;
+	cobegin
+		p1;
+		p2;
+	coend;
+	writeln('Numero: ',num);
+end.
