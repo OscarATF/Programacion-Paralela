@@ -3,7 +3,7 @@ var
 	s1,s2: boolean;
 	turno: integer;
 	
-procedure p1;
+process p1;
 begin
 	s1:=true;
 	turno:=2;
@@ -14,7 +14,7 @@ begin
 	s1:=false;
 end;
 
-procedure p2;
+process p2;
 begin
 	s2:=true;
 	turno:=1;

@@ -24,54 +24,55 @@ Compiler listing
    17    23   end;
    18    24   ntMax:=max; 
    19    27  end;
-   20    28 function ntMayorQue(i,j:integer): boolean;
-   21    28  begin
-   22    28   if nt[i]>nt[j] then
-   23    38     ntMayorQue:=true
-   24    39   else 
-   25    41    begin
-   26    42     if nt[i]<nt[j] then 
-   27    52      ntMayorQue:=false
-   28    53     else
-   29    55      begin
-   30    56       if i>j then
-   31    60        ntMayorQue:=true
-   32    61       else
-   33    63        ntMayorQue:=false;
-   34    67      end;
-   35    67    end;
-   36    67  end;
-   37    68 
-   38    68 procedure p(i:integer);
-   39    68 var j:integer;
-   40    68 begin
-   41    68  s[i]:=true;
-   42    73  nt[i]:=1+ntMax;
-   43    82  s[i]:=false;
-   44    87  for j:=1 to N do
-   45    91   begin
-   46    91    while s[j]=true do;
-   47    99    while (nt[j]<>0) and (ntMayorQue(i,j)) do;
-   48   113   end;
-   49   114  {SECCION CRITICA}
-   50   114   writeln('Seccion critica ',i);
-   51   119   nt[i]:=0;
-   52   124 end;
-   53   125 {main}
-   54   125 var
-   55   125  aux:integer;
-   56   125 begin
-   57   125  for aux:=1 to N do
-   58   129   begin
-   59   129    nt[aux]:=0;
-   60   134    s[aux]:=false;
-   61   139   end;
-   62   140  cobegin
-   63   141   p(1);
-   64   144   p(2);
-   65   147   p(3);
-   66   150  coend;
-   67   151 end.
+   20    28  
+   21    28 function ntMayorQue(i,j:integer): boolean;
+   22    28  begin
+   23    28   if nt[i]>nt[j] then
+   24    38     ntMayorQue:=true
+   25    39   else 
+   26    41    begin
+   27    42     if nt[i]<nt[j] then 
+   28    52      ntMayorQue:=false
+   29    53     else
+   30    55      begin
+   31    56       if i>j then
+   32    60        ntMayorQue:=true
+   33    61       else
+   34    63        ntMayorQue:=false;
+   35    67      end;
+   36    67    end;
+   37    67  end;
+   38    68 
+   39    68 process p(i:integer);
+   40    68  var j:integer;
+   41    68  begin
+   42    68   s[i]:=true;
+   43    73   nt[i]:=1+ntMax;
+   44    82   s[i]:=false;
+   45    87   for j:=1 to N do
+   46    91    begin
+   47    91     while s[j]=true do;
+   48    99     while (nt[j]<>0) and (ntMayorQue(i,j)) do;
+   49   113    end;
+   50   114    {SECCION CRITICA}
+   51   114    writeln('Seccion critica ',i);
+   52   119    nt[i]:=0;
+   53   124  end;
+   54   125 {main}
+   55   125 var
+   56   125  aux:integer;
+   57   125 begin
+   58   125  for aux:=1 to N do
+   59   129   begin
+   60   129    nt[aux]:=0;
+   61   134    s[aux]:=false;
+   62   139   end;
+   63   140  cobegin
+   64   141   p(1);
+   65   146   p(2);
+   66   151   p(3);
+   67   156  coend;
+   68   157 end.
 
 
 
@@ -90,10 +91,11 @@ Symbol table
  53 ntmayorque   50     function    boolean         4      True    1   28    0
  54 i             0     variable    integer         0      True    2    5    0
  55 j            54     variable    integer         0      True    2    6    0
- 56 p            53     procedure   notyp           5      True    1   68    0
- 57 i             0     variable    integer         0      True    2    5    0
- 58 j            57     variable    integer         0      True    2    6    0
- 59 aux          56     variable    integer         0      True    1   11    0
+ 56 p            53     variable    process         5      True    1   11    0
+ 57 $            56     type id     process         5      True    1   68    0
+ 58 i             0     variable    integer         0      True    2    5    0
+ 59 j            58     variable    integer         0      True    2    6    0
+ 60 aux          57     variable    integer         0      True    1   12    0
 
 Generated P-code
 
@@ -125,127 +127,133 @@ Generated P-code
    25     ldval.i      2         5          ;18
    26     store.i      0         0          ;18
    27     rfunc.i      0         0          ;18
-   28     ldadr        1         5          ;22
-   29     ldval.i      2         5          ;22
-   30     ixary.i      0         1          ;22
-   31     rpadr.i      0         0          ;22
-   32     ldadr        1         5          ;22
-   33     ldval.i      2         6          ;22
-   34     ixary.i      0         1          ;22
-   35     rpadr.i      0         0          ;22
-   36     relgt.i      0         0          ;22
-   37     jmpiz        0        42          ;22
-   38     ldadr        2         0          ;22
-   39     ldcon.b      0         1          ;23
-   40     store.b      0         0          ;23
-   41     jmpuc        0        67          ;23
-   42     ldadr        1         5          ;26
-   43     ldval.i      2         5          ;26
-   44     ixary.i      0         1          ;26
-   45     rpadr.i      0         0          ;26
-   46     ldadr        1         5          ;26
-   47     ldval.i      2         6          ;26
-   48     ixary.i      0         1          ;26
-   49     rpadr.i      0         0          ;26
-   50     rellt.i      0         0          ;26
-   51     jmpiz        0        56          ;26
-   52     ldadr        2         0          ;26
-   53     ldcon.b      0         0          ;27
-   54     store.b      0         0          ;27
-   55     jmpuc        0        67          ;27
-   56     ldval.i      2         5          ;30
-   57     ldval.i      2         6          ;30
-   58     relgt.i      0         0          ;30
-   59     jmpiz        0        64          ;30
-   60     ldadr        2         0          ;30
-   61     ldcon.b      0         1          ;31
-   62     store.b      0         0          ;31
-   63     jmpuc        0        67          ;31
-   64     ldadr        2         0          ;32
-   65     ldcon.b      0         0          ;33
-   66     store.b      0         0          ;33
-   67     rfunc.b      0         0          ;35
-   68     ldadr        1         8          ;40
-   69     ldval.i      2         5          ;41
-   70     ixary.i      0         2          ;41
-   71     ldcon.b      0         1          ;41
-   72     store.b      0         0          ;41
-   73     ldadr        1         5          ;41
-   74     ldval.i      2         5          ;42
-   75     ixary.i      0         1          ;42
-   76     ldcon.i      0         1          ;42
-   77     mkstk        0        50          ;42
-   78     calls        0         4          ;42
-   79     updis        1         2          ;42
-   80     addop.i      0         0          ;42
-   81     store.i      0         0          ;42
-   82     ldadr        1         8          ;42
-   83     ldval.i      2         5          ;43
-   84     ixary.i      0         2          ;43
-   85     ldcon.b      0         0          ;43
-   86     store.b      0         0          ;43
-   87     ldadr        2         6          ;43
-   88     ldcon.i      0         1          ;44
-   89     ldcon.i      0         3          ;44
-   90     for1u.i      0       114          ;44
-   91     ldadr        1         8          ;46
-   92     ldval.i      2         6          ;46
-   93     ixary.i      0         2          ;46
-   94     rpadr.b      0         0          ;46
-   95     ldcon.b      0         1          ;46
-   96     releq.b      0         0          ;46
-   97     jmpiz        0        99          ;46
-   98     jmpuc        0        91          ;46
-   99     ldadr        1         5          ;47
-  100     ldval.i      2         6          ;47
-  101     ixary.i      0         1          ;47
-  102     rpadr.i      0         0          ;47
-  103     ldcon.i      0         0          ;47
-  104     relne.i      0         0          ;47
-  105     mkstk        0        53          ;47
-  106     ldval.i      2         5          ;47
-  107     ldval.i      2         6          ;47
-  108     calls        0         6          ;47
-  109     updis        1         2          ;47
-  110     andop.b      0         0          ;47
-  111     jmpiz        0       113          ;47
-  112     jmpuc        0        99          ;47
-  113     for2u.i      0        91          ;47
-  114     ldcon.i      0        16          ;50
-  115     wrstr        0         0          ;50
-  116     ldval.i      2         5          ;50
-  117     wrval.i      0         0          ;50
-  118     wrlin        0         0          ;50
-  119     ldadr        1         5          ;50
-  120     ldval.i      2         5          ;51
-  121     ixary.i      0         1          ;51
-  122     ldcon.i      0         0          ;51
-  123     store.i      0         0          ;51
-  124     rproc        0         0          ;51
-  125     ldadr        1        11          ;56
-  126     ldcon.i      0         1          ;57
-  127     ldcon.i      0         3          ;57
-  128     for1u.i      0       140          ;57
-  129     ldadr        1         5          ;58
-  130     ldval.i      1        11          ;59
-  131     ixary.i      0         1          ;59
-  132     ldcon.i      0         0          ;59
-  133     store.i      0         0          ;59
-  134     ldadr        1         8          ;59
-  135     ldval.i      1        11          ;60
-  136     ixary.i      0         2          ;60
-  137     ldcon.b      0         0          ;60
-  138     store.b      0         0          ;60
-  139     for2u.i      0       129          ;60
-  140     cobeg        0         0          ;61
-  141     mkstk        0        56          ;62
-  142     ldcon.i      0         1          ;63
-  143     calls        0         5          ;63
-  144     mkstk        0        56          ;63
-  145     ldcon.i      0         2          ;64
-  146     calls        0         5          ;64
-  147     mkstk        0        56          ;64
-  148     ldcon.i      0         3          ;65
-  149     calls        0         5          ;65
-  150     coend        0         0          ;65
-  151     stopx        0         0          ;66
+   28     ldadr        1         5          ;23
+   29     ldval.i      2         5          ;23
+   30     ixary.i      0         1          ;23
+   31     rpadr.i      0         0          ;23
+   32     ldadr        1         5          ;23
+   33     ldval.i      2         6          ;23
+   34     ixary.i      0         1          ;23
+   35     rpadr.i      0         0          ;23
+   36     relgt.i      0         0          ;23
+   37     jmpiz        0        42          ;23
+   38     ldadr        2         0          ;23
+   39     ldcon.b      0         1          ;24
+   40     store.b      0         0          ;24
+   41     jmpuc        0        67          ;24
+   42     ldadr        1         5          ;27
+   43     ldval.i      2         5          ;27
+   44     ixary.i      0         1          ;27
+   45     rpadr.i      0         0          ;27
+   46     ldadr        1         5          ;27
+   47     ldval.i      2         6          ;27
+   48     ixary.i      0         1          ;27
+   49     rpadr.i      0         0          ;27
+   50     rellt.i      0         0          ;27
+   51     jmpiz        0        56          ;27
+   52     ldadr        2         0          ;27
+   53     ldcon.b      0         0          ;28
+   54     store.b      0         0          ;28
+   55     jmpuc        0        67          ;28
+   56     ldval.i      2         5          ;31
+   57     ldval.i      2         6          ;31
+   58     relgt.i      0         0          ;31
+   59     jmpiz        0        64          ;31
+   60     ldadr        2         0          ;31
+   61     ldcon.b      0         1          ;32
+   62     store.b      0         0          ;32
+   63     jmpuc        0        67          ;32
+   64     ldadr        2         0          ;33
+   65     ldcon.b      0         0          ;34
+   66     store.b      0         0          ;34
+   67     rfunc.b      0         0          ;36
+   68     ldadr        1         8          ;41
+   69     ldval.i      2         5          ;42
+   70     ixary.i      0         2          ;42
+   71     ldcon.b      0         1          ;42
+   72     store.b      0         0          ;42
+   73     ldadr        1         5          ;42
+   74     ldval.i      2         5          ;43
+   75     ixary.i      0         1          ;43
+   76     ldcon.i      0         1          ;43
+   77     mkstk        0        50          ;43
+   78     calls        0         4          ;43
+   79     updis        1         2          ;43
+   80     addop.i      0         0          ;43
+   81     store.i      0         0          ;43
+   82     ldadr        1         8          ;43
+   83     ldval.i      2         5          ;44
+   84     ixary.i      0         2          ;44
+   85     ldcon.b      0         0          ;44
+   86     store.b      0         0          ;44
+   87     ldadr        2         6          ;44
+   88     ldcon.i      0         1          ;45
+   89     ldcon.i      0         3          ;45
+   90     for1u.i      0       114          ;45
+   91     ldadr        1         8          ;47
+   92     ldval.i      2         6          ;47
+   93     ixary.i      0         2          ;47
+   94     rpadr.b      0         0          ;47
+   95     ldcon.b      0         1          ;47
+   96     releq.b      0         0          ;47
+   97     jmpiz        0        99          ;47
+   98     jmpuc        0        91          ;47
+   99     ldadr        1         5          ;48
+  100     ldval.i      2         6          ;48
+  101     ixary.i      0         1          ;48
+  102     rpadr.i      0         0          ;48
+  103     ldcon.i      0         0          ;48
+  104     relne.i      0         0          ;48
+  105     mkstk        0        53          ;48
+  106     ldval.i      2         5          ;48
+  107     ldval.i      2         6          ;48
+  108     calls        0         6          ;48
+  109     updis        1         2          ;48
+  110     andop.b      0         0          ;48
+  111     jmpiz        0       113          ;48
+  112     jmpuc        0        99          ;48
+  113     for2u.i      0        91          ;48
+  114     ldcon.i      0        16          ;51
+  115     wrstr        0         0          ;51
+  116     ldval.i      2         5          ;51
+  117     wrval.i      0         0          ;51
+  118     wrlin        0         0          ;51
+  119     ldadr        1         5          ;51
+  120     ldval.i      2         5          ;52
+  121     ixary.i      0         1          ;52
+  122     ldcon.i      0         0          ;52
+  123     store.i      0         0          ;52
+  124     rproc        1         0          ;52
+  125     ldadr        1        12          ;57
+  126     ldcon.i      0         1          ;58
+  127     ldcon.i      0         3          ;58
+  128     for1u.i      0       140          ;58
+  129     ldadr        1         5          ;59
+  130     ldval.i      1        12          ;60
+  131     ixary.i      0         1          ;60
+  132     ldcon.i      0         0          ;60
+  133     store.i      0         0          ;60
+  134     ldadr        1         8          ;60
+  135     ldval.i      1        12          ;61
+  136     ixary.i      0         2          ;61
+  137     ldcon.b      0         0          ;61
+  138     store.b      0         0          ;61
+  139     for2u.i      0       129          ;61
+  140     cobeg        0         0          ;62
+  141     mkstk        1        57          ;63
+  142     ldadr        1        11          ;63
+  143     procv        0         0          ;63
+  144     ldcon.i      0         1          ;64
+  145     calls        1         5          ;64
+  146     mkstk        1        57          ;64
+  147     ldadr        1        11          ;64
+  148     procv        0         0          ;64
+  149     ldcon.i      0         2          ;65
+  150     calls        1         5          ;65
+  151     mkstk        1        57          ;65
+  152     ldadr        1        11          ;65
+  153     procv        0         0          ;65
+  154     ldcon.i      0         3          ;66
+  155     calls        1         5          ;66
+  156     coend        0         0          ;66
+  157     stopx        0         0          ;67

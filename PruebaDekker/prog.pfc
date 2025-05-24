@@ -4,7 +4,7 @@ var
 	s1,s2: boolean;
 	turno,num: integer;
 	
-procedure p1;
+process p1;
 begin
 	s1:=true;
 	while s2=true do 
@@ -24,7 +24,7 @@ begin
 	s1:=false;
 end;
 
-procedure p2;
+process p2;
 begin
 	s2:=true;
 	while s1=true do

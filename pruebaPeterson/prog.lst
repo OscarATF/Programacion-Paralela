@@ -10,7 +10,7 @@ Compiler listing
     3     0  s1,s2: boolean;
     4     0  turno: integer;
     5     0  
-    6     0 procedure p1;
+    6     0 process p1;
     7     0 begin
     8     0  s1:=true;
     9     3  turno:=2;
@@ -21,7 +21,7 @@ Compiler listing
    14    18  s1:=false;
    15    21 end;
    16    22 
-   17    22 procedure p2;
+   17    22 process p2;
    18    22 begin
    19    22  s2:=true;
    20    25  turno:=1;
@@ -40,9 +40,9 @@ Compiler listing
    33    50  turno:=1;
    34    53  cobegin
    35    54   p1;
-   36    56   p2;
-   37    58  coend;
-   38    59 end.
+   36    58   p2;
+   37    62  coend;
+   38    63 end.
 
 
 
@@ -55,8 +55,10 @@ Symbol table
  47 s1           46     variable    boolean         0      True    1    5    0
  48 s2           47     variable    boolean         0      True    1    6    0
  49 turno        48     variable    integer         0      True    1    7    0
- 50 p1           49     procedure   notyp           3      True    1    0    0
- 51 p2           50     procedure   notyp           4      True    1   22    0
+ 50 p1           49     variable    process         3      True    1    8    0
+ 51 $            50     type id     process         3      True    1    0    0
+ 52 p2           51     variable    process         4      True    1    9    0
+ 53 $            52     type id     process         4      True    1   22    0
 
 Generated P-code
 
@@ -81,7 +83,7 @@ Generated P-code
    18     ldadr        1         5          ;12
    19     ldcon.b      0         0          ;14
    20     store.b      0         0          ;14
-   21     rproc        0         0          ;14
+   21     rproc        1         0          ;14
    22     ldadr        1         6          ;18
    23     ldcon.b      0         1          ;19
    24     store.b      0         0          ;19
@@ -103,7 +105,7 @@ Generated P-code
    40     ldadr        1         6          ;23
    41     ldcon.b      0         0          ;24
    42     store.b      0         0          ;24
-   43     rproc        0         0          ;24
+   43     rproc        1         0          ;24
    44     ldadr        1         5          ;29
    45     ldcon.b      0         0          ;31
    46     store.b      0         0          ;31
@@ -114,9 +116,13 @@ Generated P-code
    51     ldcon.i      0         1          ;33
    52     store.i      0         0          ;33
    53     cobeg        0         0          ;33
-   54     mkstk        0        50          ;34
-   55     calls        0         4          ;34
-   56     mkstk        0        51          ;35
-   57     calls        0         4          ;35
-   58     coend        0         0          ;36
-   59     stopx        0         0          ;37
+   54     mkstk        1        51          ;34
+   55     ldadr        1         8          ;34
+   56     procv        0         0          ;34
+   57     calls        1         4          ;34
+   58     mkstk        1        53          ;35
+   59     ldadr        1         9          ;35
+   60     procv        0         0          ;35
+   61     calls        1         4          ;35
+   62     coend        0         0          ;36
+   63     stopx        0         0          ;37

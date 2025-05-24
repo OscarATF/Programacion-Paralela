@@ -36,7 +36,7 @@ function ntMayorQue(i,j:integer): boolean;
 			end;
 	end;
 
-procedure p(i:integer);
+process p(i:integer);
 	var j:integer;
 	begin
 		s[i]:=true;
